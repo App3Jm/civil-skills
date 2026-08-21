@@ -1,0 +1,14 @@
+interface:
+  display_name: Orçamento de Obra
+  short_description: Orçamentos analíticos de obras no Brasil
+  default_prompt: Use $orcamento-obra para elaborar ou revisar um orçamento de construção
+    civil no Brasil.
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true

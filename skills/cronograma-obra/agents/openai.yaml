@@ -1,0 +1,14 @@
+interface:
+  display_name: Cronograma de Obra
+  short_description: Planejamento físico-financeiro de obras
+  default_prompt: Use $cronograma-obra para criar ou analisar um cronograma físico-financeiro
+    de construção civil.
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true

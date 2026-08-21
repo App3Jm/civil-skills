@@ -1,0 +1,14 @@
+interface:
+  display_name: Memorial Descritivo de Obra
+  short_description: Memoriais e especificações técnicas de obras
+  default_prompt: Use $memorial-descritivo-obra para redigir ou revisar um memorial
+    técnico de construção civil.
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true

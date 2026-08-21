@@ -1,360 +1,306 @@
-# 🏗️ civil-skills
+# Civil Skills para Construção Civil
 
-> **Agent Skills para Construção Civil** — Skills profissionais para Claude Code, OpenClaw, Cursor, GitHub Copilot e demais agentes compatíveis com o formato SKILL.md.
+> Skills especializadas em orçamento, planejamento e documentação técnica de obras no Brasil, adaptadas para uso no ChatGPT e no Codex.
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Skills: 1](https://img.shields.io/badge/Skills-1-blue.svg)](#skills-disponíveis)
-[![Versão](https://img.shields.io/badge/Versão-v0.1.1-green.svg)](#changelog)
-[![Compatível com](https://img.shields.io/badge/Compatível%20com-Claude%20%7C%20OpenClaw%20%7C%20Cursor%20%7C%20Copilot-blueviolet.svg)](#compatibilidade)
+[![Skills](https://img.shields.io/badge/skills-3-blue.svg)](#skills-disponíveis)
+[![Idioma](https://img.shields.io/badge/idioma-pt--BR-green.svg)](#visão-geral)
+[![Licença](https://img.shields.io/badge/licença-MIT-yellow.svg)](#autoria-licença-e-origem)
 
----
+## Sumário
 
-## O que é este repositório?
+- [Visão geral](#visão-geral)
+- [Skills disponíveis](#skills-disponíveis)
+- [Como as skills trabalham juntas](#como-as-skills-trabalham-juntas)
+- [Instalação](#instalação)
+- [Como usar](#como-usar)
+- [Orçamento de obra](#orçamento-de-obra)
+- [Cronograma de obra](#cronograma-de-obra)
+- [Memorial descritivo de obra](#memorial-descritivo-de-obra)
+- [Arquivos e formatos de entrega](#arquivos-e-formatos-de-entrega)
+- [Critérios técnicos e limitações](#critérios-técnicos-e-limitações)
+- [Estrutura do pacote](#estrutura-do-pacote)
+- [Autoria, licença e origem](#autoria-licença-e-origem)
 
-Este repositório reúne **Agent Skills especializadas em construção civil** desenvolvidas por um engenheiro civil com experiência em orçamentação, projetos e gestão de obras no Brasil.
+## Visão geral
 
-As skills seguem o **formato aberto SKILL.md** — desenvolvido pela Anthropic e adotado como padrão pelo ecossistema de agentes de IA — o que garante que funcionem em múltiplas ferramentas sem nenhuma adaptação.
+Este pacote reúne três skills voltadas à construção civil brasileira:
 
-Pense nelas como **receitas técnicas** que ensinam seu agente de IA a trabalhar como um profissional sênior da construção civil: orçamentista, planejador de obras, redator de memoriais.
+- `orcamento-obra`, para custos, quantitativos, composições, BDI e auditoria orçamentária;
+- `cronograma-obra`, para planejamento, controle, simulações e cronograma físico-financeiro;
+- `memorial-descritivo-obra`, para especificações técnicas, diagnóstico documental e critérios de execução e aceitação.
 
----
+As skills foram revisadas para trabalhar com informações rastreáveis, separar dados confirmados de premissas e evitar o preenchimento de lacunas técnicas com valores inventados. Elas podem analisar arquivos fornecidos pelo usuário e gerar entregas em texto estruturado, XLSX, DOCX, PDF ou apresentações, conforme a necessidade e as ferramentas disponíveis.
 
-## Skills Disponíveis
+O alvo principal desta edição é o sistema de Skills do ChatGPT e do Codex. A estrutura `SKILL.md` pode ser aproveitada por outros agentes compatíveis, mas caminhos, metadados, comandos e ferramentas podem exigir adaptação.
 
-| # | Skill | Descrição | Status |
-|---|-------|-----------|--------|
-| 01 | [`orcamento-obra`](./skills/orcamento-obra/SKILL.md) | Orçamento analítico com SINAPI, TCPO, composição própria ou BIM/ABNT | ✅ v1.0 |
-| 02 | [`cronograma-obra`](./skills/cronograma-obra/SKILL.md) | Cronograma físico-financeiro, CPM/PERT, Curva S, EVM/GVA, histograma de MO | ✅ v1.1 |
-| 03 | [`memorial-descritivo-obra`](./skills/memorial-descritivo-obra/SKILL.md) | Memorial descritivo técnico completo — obras, arquitetura e instalações | ✅ v1.0 |
+## Skills disponíveis
 
----
-
-## Como Instalar
-
-### Opção 1 — Via CLI do agentskill.sh (recomendado)
-
-```bash
-# Instalar uma skill específica
-npx @agentskill.sh/cli@latest install @heliopaivajr/orcamento-obra
-
-# Ou instalar todas as skills deste repositório
-npx @agentskill.sh/cli@latest install @heliopaivajr/civil-skills
-```
-
-### Opção 2 — Manual para Claude Code
-
-```bash
-# No diretório raiz do seu projeto
-mkdir -p .claude/skills/orcamento-obra
-
-# Baixar o SKILL.md diretamente
-curl -o .claude/skills/orcamento-obra/SKILL.md \
-  https://raw.githubusercontent.com/heliopaivajr/civil-skills/main/skills/orcamento-obra/SKILL.md
-```
-
-### Opção 3 — Manual para OpenClaw
-
-```bash
-# Criar pasta de skills do OpenClaw (ajuste o caminho conforme seu sistema)
-mkdir -p ~/.openclaw/skills/orcamento-obra
-
-# Baixar o SKILL.md
-curl -o ~/.openclaw/skills/orcamento-obra/SKILL.md \
-  https://raw.githubusercontent.com/heliopaivajr/civil-skills/main/skills/orcamento-obra/SKILL.md
-```
-
-### Opção 4 — Clonar o repositório completo
-
-```bash
-# Clonar uma vez e usar todas as skills localmente
-git clone https://github.com/heliopaivajr/civil-skills.git
-
-# Copiar para Claude Code (projeto atual)
-cp -r civil-skills/skills/orcamento-obra .claude/skills/
-
-# Copiar para OpenClaw
-cp -r civil-skills/skills/orcamento-obra ~/.openclaw/skills/
-```
-
-### Opção 5 — Windows (PowerShell)
-
-```powershell
-# Criar pasta no perfil do usuário (disponível em todos os projetos)
-New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.claude\skills\orcamento-obra"
-
-# Baixar o arquivo
-Invoke-WebRequest `
-  -Uri "https://raw.githubusercontent.com/heliopaivajr/civil-skills/main/skills/orcamento-obra/SKILL.md" `
-  -OutFile "$env:USERPROFILE\.claude\skills\orcamento-obra\SKILL.md"
-```
-
----
-
-## Como Usar
-
-### Invocação explícita (Claude Code / OpenClaw)
-
-```
-/orcamento-obra
-```
-
-### Invocação implícita (por linguagem natural)
-
-Basta descrever o que você precisa — o agente ativa a skill automaticamente:
-
-```
-"Preciso orçar a construção de uma casa de 120m² em Recife, PE"
-
-"Qual o custo de revestimento cerâmico interno pelo SINAPI de Pernambuco?"
-
-"Monte uma planilha orçamentária para reforma de banheiro"
-
-"Orçamento analítico para obra pública — escola em Maceió/AL"
-
-"Quanto custa construir um galpão industrial de 500m²?"
-```
-
-### Fluxo típico de uso (skill `orcamento-obra`)
-
-```
-1. Agente pergunta: qual base de referência? (SINAPI / TCPO / Própria / BIM / Mista)
-2. Agente coleta: UF, tipo de obra, mês de referência, desoneração, natureza
-3. Agente estrutura: planilha por macroetapas com códigos e custos
-4. Agente calcula: BDI, encargos, Administração Local
-5. Agente gera: Curva ABC + Resumo Geral
-6. Agente entrega: em Markdown, XLSX, DOCX ou texto estruturado
-```
-
----
-
-## Compatibilidade
-
-| Ferramenta | Suporte | Invocação |
+| Skill | Função principal | Recursos |
 |---|---|---|
-| **Claude Code** | ✅ Nativo | `/orcamento-obra` ou linguagem natural |
-| **OpenClaw** | ✅ Nativo | `/orcamento-obra` ou linguagem natural |
-| **GitHub Copilot** | ✅ Via `.github/skills/` | `/orcamento-obra` no chat |
-| **Cursor** | ✅ Via `.cursor/skills/` | Linguagem natural |
-| **Windsurf** | ✅ Compatível | Linguagem natural |
-| **Codex CLI** | ✅ Compatível | `$orcamento-obra` |
-| **Claude.ai** | ✅ Upload manual | Upload do SKILL.md nas configurações |
+| [`orcamento-obra`](./skills/orcamento-obra/SKILL.md) | Elaborar, revisar e auditar orçamentos | Estimativa paramétrica, quantitativos, composições próprias, SINAPI, SICRO, TCPO autorizado, mercado, BIM, encargos, administração local, BDI e Curva ABC |
+| [`cronograma-obra`](./skills/cronograma-obra/SKILL.md) | Elaborar, revisar, auditar e simular cronogramas | EAP, calendários, Gantt, CPM/PERT, caminho crítico, Linha de Balanço, Curva S, recursos, suprimentos, EVM e recuperação de prazo |
+| [`memorial-descritivo-obra`](./skills/memorial-descritivo-obra/SKILL.md) | Elaborar e diagnosticar memoriais e especificações | Inventário documental, classificação de definições e pendências, especificações por disciplina, tabelas de acabamentos, critérios de aceitação e documentação *as built* |
 
----
+## Como as skills trabalham juntas
 
-## Localização dos Arquivos por Ferramenta
+Cada skill mantém um limite claro de responsabilidade:
 
+| Necessidade principal | Skill responsável | Encaminhamento complementar |
+|---|---|---|
+| Quantificar e calcular custos | `orcamento-obra` | Consulta o memorial para definir o serviço e o cronograma para distribuir custos no tempo |
+| Planejar prazos e sequência | `cronograma-obra` | Usa os custos do orçamento e os métodos, restrições e critérios definidos no memorial |
+| Especificar materiais e execução | `memorial-descritivo-obra` | Encaminha cálculos de custos ao orçamento e planejamento temporal ao cronograma |
+
+Em uma análise integrada, o fluxo recomendado é iterativo:
+
+1. diagnosticar projetos, escopo, especificações, conflitos e pendências;
+2. consolidar quantitativos, fontes de preços, custos diretos, administração local e BDI;
+3. estruturar EAP, atividades, precedências, recursos, custos por período e linha de base;
+4. reconciliar alterações entre memorial, orçamento e cronograma antes da entrega.
+
+## Instalação
+
+Para instalar no ChatGPT ou no Codex, importar cada pasta completa da skill. Não enviar somente o `SKILL.md` quando a pasta também contiver referências, scripts, metadados ou recursos.
+
+Para baixar as três skills de uma vez, usar o arquivo [`files.zip`](./files.zip) disponível na raiz deste repositório.
+
+Estrutura mínima esperada:
+
+```text
+nome-da-skill/
+├── SKILL.md
+├── agents/
+│   └── openai.yaml
+├── references/
+├── scripts/
+└── assets/
 ```
-Projeto (escopo local):
-  Claude Code:   .claude/skills/orcamento-obra/SKILL.md
-  Copilot:       .github/skills/orcamento-obra/SKILL.md
-  Cursor:        .cursor/skills/orcamento-obra/SKILL.md
 
-Usuário (disponível em todos os projetos):
-  Claude Code:   ~/.claude/skills/orcamento-obra/SKILL.md
-  OpenClaw:      ~/.openclaw/skills/orcamento-obra/SKILL.md
-  Copilot:       ~/.copilot/skills/orcamento-obra/SKILL.md
+Nem todas as skills usam todas essas pastas. Deve-se preservar apenas os arquivos existentes no pacote.
+
+Ao transferir para outra ferramenta compatível com `SKILL.md`, consultar a documentação dessa ferramenta para definir o diretório de instalação e a sintaxe de chamada. Os metadados de `agents/openai.yaml` foram preparados para a interface do ChatGPT/Codex e podem ser ignorados por outros agentes.
+
+## Como usar
+
+A skill pode ser selecionada no painel de Skills ou citada pelo nome na solicitação. Dependendo da interface, a chamada pode aparecer como `@nome-da-skill` ou `$nome-da-skill`. Também é possível descrever a tarefa em linguagem natural para que a skill adequada seja selecionada pelo contexto.
+
+Para respostas mais confiáveis, fornecer:
+
+- objetivo da análise e formato de entrega;
+- identificação, tipo e localização da obra;
+- fase do empreendimento;
+- projetos, memoriais, planilhas e revisões disponíveis;
+- data-base, calendário, marcos ou exigências contratuais aplicáveis;
+- escopo incluído, excluído e decisões já aprovadas.
+
+Quando faltarem dados, as skills podem criar estruturas preliminares com premissas e campos pendentes. Esses resultados não devem ser tratados automaticamente como orçamento final, linha de base contratual, documento apto para licitação ou registro *as built*.
+
+## Orçamento de obra
+
+Usar `orcamento-obra` para:
+
+- estimativas paramétricas e custo por metro quadrado;
+- levantamento e conferência de quantitativos;
+- planilhas analíticas e composições de custos unitários;
+- bases SINAPI, SICRO, TCPO fornecido ou licenciado, CUB, mercado e composições próprias;
+- orçamento BIM com rastreabilidade dos elementos e quantitativos;
+- encargos sociais, administração local, mobilização, canteiro e BDI;
+- Curva ABC, auditoria de planilhas e comparação de propostas;
+- entregas em XLSX, DOCX ou texto estruturado.
+
+Informações recomendadas:
+
+- finalidade do orçamento;
+- tipo da obra e natureza pública ou privada;
+- cidade e UF;
+- base e competência de preços;
+- regime desonerado ou não desonerado;
+- projetos, quantitativos e especificações disponíveis;
+- área, padrão construtivo, escopo e exclusões.
+
+Exemplos de solicitação:
+
+```text
+Use @orcamento-obra para elaborar um orçamento analítico de uma escola municipal
+em Recife/PE. Utilize SINAPI, informe a competência consultada, separe custos
+diretos, administração local e BDI e entregue uma planilha XLSX auditável.
+
+Use @orcamento-obra para revisar a planilha anexada. Confira quantitativos,
+unidades, fontes, competência, duplicidades, BDI e Curva ABC. Liste as divergências
+antes de propor qualquer correção.
+
+Use @orcamento-obra para criar uma estimativa preliminar desta reforma. Onde não
+houver dado suficiente, registre a premissa ou deixe o campo pendente.
 ```
 
----
+## Cronograma de obra
 
-## Estrutura do Repositório
+Usar `cronograma-obra` para:
 
+- EAP e lista de atividades;
+- calendários, relações de precedência e gráfico de Gantt;
+- CPM/PERT, folgas, caminho crítico e caminhos quase críticos;
+- Linha de Balanço para blocos, pavimentos, trechos ou unidades repetitivas;
+- cronograma físico-financeiro e Curva S;
+- histogramas, nivelamento de recursos e cronograma de suprimentos;
+- linha de base, atualização de avanço e previsão de término;
+- EVM com VP, VA, CR, IDC, IDP e projeções justificadas;
+- simulações de atraso e planos de recuperação;
+- análise de exportações do MS Project e do Primavera P6.
+
+Informações recomendadas:
+
+- escopo, EAP ou lista de atividades;
+- data de início, prazo, marcos e calendário;
+- durações ou quantitativos e produtividades;
+- predecessoras, defasagens e restrições;
+- equipes, equipamentos e limites de disponibilidade;
+- custos por atividade;
+- linha de base, data de corte e medições realizadas.
+
+Exemplos de solicitação:
+
+```text
+Use @cronograma-obra para elaborar um cronograma físico-financeiro preliminar.
+Monte a EAP, registre as premissas de duração, crie a rede lógica, identifique o
+caminho crítico e gere a Curva S. Não trate o cenário como linha de base aprovada.
+
+Use @cronograma-obra para analisar o XLS exportado do MS Project. Verifique a
+qualidade da rede, atividades sem sucessoras, restrições rígidas, folgas, caminho
+crítico e coerência do avanço na data de corte informada.
+
+Use @cronograma-obra para simular um atraso de três semanas na estrutura. Preserve
+a linha de base, recalcule a rede e apresente impacto no término, atividades
+afetadas, riscos e alternativas de recuperação.
 ```
+
+O arquivo `scripts/schedule_math.py` apoia cálculos determinísticos de CPM para redes simples e indicadores básicos de EVM. Redes com calendários múltiplos, defasagens, restrições ou relações diferentes de término-início exigem ferramenta ou cálculo compatível com essa complexidade.
+
+## Memorial descritivo de obra
+
+Usar `memorial-descritivo-obra` para:
+
+- memoriais de obra nova, reforma, retrofit, ampliação e interiores;
+- cadernos de especificações e tabelas de acabamentos;
+- arquitetura, estrutura, fundações e impermeabilização;
+- instalações hidrossanitárias, elétricas, dados, SPDA e climatização;
+- incêndio, acessibilidade, áreas externas e resíduos;
+- memoriais para orçamento, compras, execução, licitação e entrega;
+- diagnóstico de projetos, conflitos e omissões;
+- documentação *as built* baseada em registros verificados.
+
+Cada requisito é classificado como:
+
+- `DEFINIDO`: há fonte suficiente e coerente;
+- `PARCIAL`: existem dados, mas faltam parâmetros necessários;
+- `PENDENTE`: não há fonte ou decisão;
+- `CONFLITANTE`: documentos ou decisões divergem;
+- `NÃO APLICÁVEL`: item analisado e excluído com justificativa.
+
+Informações recomendadas:
+
+- tipo, uso e fase do memorial;
+- disciplinas contempladas e excluídas;
+- localização, ocupação e uso da edificação;
+- projetos, revisões, levantamentos e aprovações;
+- finalidade: contratação, orçamento, execução, operação ou entrega;
+- nível de detalhamento e formato final.
+
+Exemplos de solicitação:
+
+```text
+Use @memorial-descritivo-obra para diagnosticar os projetos anexos. Classifique
+as informações como DEFINIDO, PARCIAL, PENDENTE ou CONFLITANTE e indique o impacto
+de cada lacuna no orçamento, no prazo e na execução.
+
+Use @memorial-descritivo-obra para redigir um memorial técnico por disciplina,
+com critérios verificáveis de execução, inspeção, ensaio e aceitação. Não invente
+marcas, dimensões ou capacidades que não estejam nos documentos.
+
+Use @memorial-descritivo-obra para preparar uma minuta para futura licitação.
+Como os projetos ainda estão incompletos, separe requisitos de desempenho e
+pendências impeditivas e não classifique o documento como apto para licitar.
+```
+
+## Arquivos e formatos de entrega
+
+| Formato | Uso recomendado |
+|---|---|
+| Markdown ou texto estruturado | Diagnósticos, premissas, tabelas simples e conteúdo para revisão |
+| XLSX | Orçamento, quantitativos, cronograma físico-financeiro, Curva S, EVM e controles tabulares |
+| DOCX | Memorial descritivo, relatório técnico, auditoria e relatório de acompanhamento |
+| PDF | Versão controlada para distribuição, após revisão visual |
+| PPTX | Apresentação executiva de prazo, custos, riscos e decisões |
+| CSV/XLSX exportado | Entrada para análise de MS Project, Primavera P6 ou outros sistemas |
+
+As planilhas devem manter fórmulas auditáveis. Documentos e PDFs devem ser revisados quanto a paginação, tabelas, títulos e legibilidade antes da entrega.
+
+## Critérios técnicos e limitações
+
+As três skills seguem estes princípios:
+
+- informar fonte, localidade, competência e data-base quando aplicável;
+- distinguir documento confirmado, cálculo, hipótese, estimativa e pendência;
+- não inventar códigos, preços, quantitativos, durações, normas ou especificações;
+- verificar normas, legislação, tributos e bases de preços quando puderem ter mudado;
+- não reproduzir conteúdo protegido de bases como TCPO sem acesso autorizado;
+- preservar linha de base e dados originais ao analisar arquivos existentes;
+- registrar conflitos e solicitar decisão formal quando a ordem de precedência não estiver definida;
+- recomendar revisão e responsabilidade técnica por profissional habilitado antes de licitar, contratar ou executar.
+
+Aplicações específicas:
+
+- segurança de obra deve considerar a NR-18 vigente e o PGR aplicável; PCMAT não é adotado como exigência atual genérica;
+- incêndio deve considerar ocupação, área, altura, risco e regras do Corpo de Bombeiros competente, sem aplicar um limite nacional genérico;
+- SPDA depende de avaliação de risco e projeto quando aplicável;
+- acessibilidade deve ser confirmada na norma vigente, na legislação e no projeto, sem inserir dimensões de memória;
+- *as built* deve refletir o executado e verificado, não uma cópia presumida do projeto executivo;
+- SPI/IDP não deve ser convertido diretamente em dias de atraso; o efeito temporal deve ser calculado pela rede do cronograma.
+
+## Estrutura do pacote
+
+```text
 civil-skills/
-├── README.md                          ← Este arquivo
-├── LICENSE                            ← MIT License
-├── CHANGELOG.md                       ← Histórico de versões
+├── README.md
+├── LICENSE
 └── skills/
     ├── orcamento-obra/
-    │   └── SKILL.md                   ← Skill de orçamento (v1.0)
-    ├── cronograma-obra/               ← Em desenvolvimento
-    │   └── SKILL.md
-    └── memorial-descritivo-obra/      ← Em desenvolvimento
-        └── SKILL.md
+    │   ├── SKILL.md
+    │   ├── agents/openai.yaml
+    │   ├── assets/icon.svg
+    │   └── references/fontes-oficiais.md
+    ├── cronograma-obra/
+    │   ├── SKILL.md
+    │   ├── agents/openai.yaml
+    │   ├── assets/icon.svg
+    │   ├── references/metodologias-fontes.md
+    │   └── scripts/schedule_math.py
+    └── memorial-descritivo-obra/
+        ├── SKILL.md
+        ├── agents/openai.yaml
+        ├── assets/icon.svg
+        └── references/
+            ├── estrutura-modelo.md
+            └── fontes-normativas.md
 ```
 
----
+## Autoria, licença e origem
 
-## Base Técnica das Skills
+Adaptação, revisão técnica e organização desta edição por **Jairo Luz**, com foco em orçamento, projetos, planejamento e gestão de obras no Brasil.
 
-As skills deste repositório são desenvolvidas com base em:
+Criada a partir de um fork do repositório: https://github.com/heliopaivajr/civil-skills
 
-| Referência | Aplicação |
-|---|---|
-| **SINAPI** — CEF/IBGE (tabelas mensais) | Preços de insumos e composições |
-| **TCPO Ed. 14** — Editora PINI | Composições de mercado privado |
-| **Lei 14.133/2021** | Nova Lei de Licitações e Contratos |
-| **Decreto 7.983/2013** | Uso obrigatório do SINAPI em obras federais |
-| **Acórdão TCU 2622/2013** | Limites de BDI para obras públicas |
-| **ABNT NBR 15965** | Classificação da Informação da Construção (BIM) |
-| **Decreto 9.983/2019** | Implantação do BIM no setor público brasileiro |
-| **ABNT NBR 12.721** | CUB — Custo Unitário Básico |
-| **NR-18** | Segurança em obras de construção civil |
+O projeto original foi desenvolvido por **Hélio Paiva Jr.** e distribuído sob licença MIT. Ao redistribuir esta adaptação, manter os avisos de autoria, a referência ao projeto original e o arquivo de licença correspondente.
 
----
+### Alterações desta edição
 
-## Sobre o Autor
-
-**Hélio Paiva Jr.** — Engenheiro Civil | Orçamentista | Desenvolvedor
-
-- 🏗️ Engenheiro civil com experiência em orçamentação SINAPI e gestão de obras
-- 💻 Desenvolvedor SaaS — [ObraPrice](https://github.com/heliopaivajr/SAAS_ORCA) (plataforma de orçamentação automatizada)
-- 🌐 Site: [heliopaiva.com.br](https://heliopaiva.com.br)
-- 📦 GitHub: [@heliopaivajr](https://github.com/heliopaivajr)
-
----
-
-## Contribuição
-
-Contribuições são bem-vindas! Se você é profissional da construção civil e quer melhorar ou adicionar skills:
-
-1. Faça um fork do repositório
-2. Crie uma branch: `git checkout -b feat/nome-da-skill`
-3. Adicione ou edite o `SKILL.md` na pasta correta
-4. Abra um Pull Request descrevendo a melhoria
-
-Por favor, mantenha o padrão de qualidade: instruções claras, exemplos reais, referências técnicas brasileiras.
-
----
-
-## Changelog
-
-### v0.1.0 — Abril/2026
-- 🎉 Criação do repositório `civil-skills`
-- ✅ Publicação da skill `orcamento-obra` v1.0
-  - Suporte a SINAPI, TCPO, Composição Própria, BIM/ABNT NBR 15965 e Base Mista
-  - 12 etapas completas: contexto → entrega
-  - BDI com fórmula TCU, Curva ABC, Administração Local, validações automáticas
-
----
-
-## Licença
-
-MIT License — veja o arquivo [LICENSE](./LICENSE) para detalhes.
-
-> Skills são instruções de texto. Não contêm código executável. Podem ser usadas, modificadas e distribuídas livremente conforme os termos da licença MIT.
-
----
-
-### Fluxo típico de uso (skill `memorial-descritivo-obra`)
-
-A skill atua como especialista sênior — **faz perguntas técnicas antes de redigir**, garantindo documento útil para orçamento, compras e execução.
-
-```
-1. Agente pergunta: qual tipo de memorial? (obra nova / reforma / instalações / as built...)
-2. Agente coleta: identificação, disciplinas e documentos disponíveis
-3. Agente analisa arquivos enviados (plantas, PDFs, briefing)
-4. Agente executa diagnóstico: DEFINIDO / PARCIAL / OMISSO / CONTRADITÓRIO
-5. Agente redige: memorial por disciplina + tabela de acabamentos por ambiente
-6. Agente consolida: pendências com impacto e responsável
-7. Agente entrega: Markdown, DOCX ou PDF — com aviso de revisão pelo RT
-```
-
-**Prompts prontos para usar com a skill `memorial-descritivo-obra`:**
-
-```
-# Diagnóstico técnico completo (envie os projetos junto):
-"Analise tecnicamente os arquivos como especialista em memorial descritivo.
-Identifique por disciplina tudo que está definido, parcialmente definido, omisso
-e contraditório. Destaque lacunas que afetam orçamento e execução."
-
-# Memorial completo:
-"Gere um memorial descritivo técnico e profissional. Estruture em: identificação,
-objetivo, escopo contemplado e excluído, premissas, serviços preliminares,
-arquitetura, estrutura, instalações, tabela de acabamentos por ambiente, pendências
-e observações. Registre [PENDENTE] onde não há definição."
-
-# Diagnóstico por ambiente:
-"Faça levantamento por ambiente: piso, rodapé, paredes, teto, esquadrias, vidros,
-bancadas, louças, metais, iluminação e climatização. Indique [PENDENTE] onde não
-houver definição clara."
-
-# Versão para orçamento:
-"Transforme o memorial em versão para orçamento, classificando cada item em:
-DEFINIDO / PARCIALMENTE DEFINIDO / PENDENTE / CONFLITANTE."
-
-# Relatório de pendências para cliente:
-"Gere relatório de pendências por disciplina para envio ao cliente/arquiteto,
-destacando o impacto de cada omissão no orçamento e execução."
-```
-
----
-
-### Fluxo típico de uso (skill `cronograma-obra`)
-
-A skill atua como especialista PMI — estrutura do zero ou aprimora cronogramas existentes, do físico ao controle financeiro.
-
-```
-1. Agente pergunta: o que precisa? (Gantt / Físico-Financeiro / CPM / EVM / Plano Completo)
-2. Agente coleta: obra, prazo, orçamento, atividades, restrições
-3. Agente monta: EAP hierárquica (WBS) como base do cronograma
-4. Agente calcula: caminho crítico (CPM/PERT) com folgas e atividades críticas
-5. Agente distribui: custos por período → tabela de desembolso mensal
-6. Agente gera: Curva S (físico e financeiro acumulado)
-7. Agente dimensiona: histograma de MO e equipamentos + nivelamento
-8. Agente monitora: EVM com VP, VA, CR, IDC, IDP, EAC e diagnóstico
-9. Agente entrega: relatório completo com marcos, riscos e suprimentos
-```
-
-**Prompts prontos para usar com a skill `cronograma-obra`:**
-
-```
-# Cronograma físico-financeiro completo:
-"Atue como especialista em planejamento de obras. Elabore cronograma físico-financeiro
-completo para [obra], prazo [X meses], orçamento R$ [valor]. Inclua EAP, Gantt com
-caminho crítico, desembolso mensal, Curva S e histograma de MO. Metodologia PMI/PMBOK."
-
-# Caminho crítico (CPM):
-"Calcule o caminho crítico para as seguintes atividades: [lista com duração e
-predecessoras]. Apresente passagem direta/inversa, folgas e duração mínima da obra."
-
-# EVM — controle de obra em andamento:
-"Calcule os indicadores EVM: OAC=R$[valor], % planejado=[X]%, % realizado=[Y]%,
-custo real=R$[valor]. Calcule VP, VA, CR, IDC, IDP, EAC, VAC e IDCN. Diagnóstico
-e recomendações."
-
-# Histograma de mão de obra:
-"Dimensione o histograma de MO para [obra]. Calcule equipe por atividade,
-consolide por período, apresente o histograma e calcule o índice de irregularidade."
-
-# Plano de recuperação de atraso:
-"A obra está [X dias] atrasada. Caminho crítico: [atividades]. Analise causas,
-impacto e proponha plano de recuperação com aceleração das atividades críticas."
-
-# Cronograma de suprimentos:
-"Com base no cronograma físico, elabore o cronograma de compras e contratações
-considerando lead times. Identifique itens críticos e datas limite de compra."
-```
-
----
-
-### Novidades v1.1 — skill `cronograma-obra`
-
-**Etapa 14 — Simulação de Cenários (XLS/CSV existente)**
-Carregue o XLS exportado do MS Project e simule qualquer hipótese em linguagem natural:
-
-```
-# Ler e diagnosticar cronograma existente:
-"Analise o cronograma em anexo (XLS do MS Project). Identifique caminho crítico,
-atividades com folga, % de avanço abaixo do esperado para hoje [data] e diagnóstico
-do status atual."
-
-# Simular atraso e calcular impacto:
-"Com base no cronograma anexado, simule: atraso de 3 semanas na concretagem do
-3º pavimento. Calcule nova data de entrega, atividades impactadas no caminho crítico
-e 3 alternativas de recuperação com custo incremental."
-```
-
-**Etapa 15 — Relatórios Automatizados por Público**
-Do mesmo arquivo, três formatos simultâneos em minutos:
-
-```
-# Três relatórios a partir de um único XLS:
-"Com base no cronograma anexado, gere:
-1. Word para o cliente — resumo executivo, % avanço, previsto x realizado,
-   pendências e próximas entregas. Linguagem acessível.
-2. PPT para diretoria — KPIs, Gantt executivo, Curva S, alertas, decisões.
-3. Dashboard HTML para o time de campo — status por atividade, filtros por
-   frente, caminho crítico destacado, alertas 7 dias.
-Data de referência: [data]."
-```
+- conclusão e integração das três skills;
+- adaptação para o sistema de Skills do ChatGPT/Codex;
+- metadados e ícones para apresentação na interface;
+- autoria de Jairo Luz e atribuição ao projeto original;
+- referências complementares e critérios de rastreabilidade;
+- proteção contra preços, códigos, durações e especificações inventadas;
+- tratamento de documentos preliminares, conflitos, linha de base e *as built*;
+- atualização da segurança de obra para NR-18 e PGR;
+- script de apoio para CPM e EVM em `cronograma-obra`;
+- encaminhamento obrigatório entre orçamento, cronograma e memorial.
